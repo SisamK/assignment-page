@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment 4 3D Object</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <script>
+    // Create scene, camera, and renderer
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Add a light source
+    const light = new THREE.AmbientLight(0xffffff, 1); // White light
+    scene.add(light);
+
+    // Load image textures for all faces
+    const textureLoader = new THREE.TextureLoader();
+    const frontTexture = textureLoader.load('img/fruits.jpg');  // Replace with child-friendly image
+    const backTexture = textureLoader.load('img/panda.jpg');    // Replace with child-friendly image
+    const leftTexture = textureLoader.load('img/panda.jpg');    // Replace with child-friendly image
+    const rightTexture = textureLoader.load('img/tiger.jpg');
+    const topTexture = textureLoader.load('img/octopus.jpg');   // Replace with child-friendly image
+
+    // Load materials using the textures for each side
+    const materials = [
+      new THREE.MeshBasicMaterial({ map: frontTexture }), // Front
+      new THREE.MeshBasicMaterial({ map: backTexture }),  // Back
+      new THREE.MeshBasicMaterial({ map: leftTexture }),  // Left
+      new THREE.MeshBasicMaterial({ map: rightTexture }), // Right
+      new THREE.MeshBasicMaterial({ map: topTexture }),   // Top (solid color)
+      new THREE.MeshBasicMaterial({ color: 0xaaaaaa }),   // Bottom (solid color)
+    ];
+
+    const geometry = new THREE.BoxGeometry(10, 10, 10); // Increased size: 10x10x10
+    const cube = new THREE.Mesh(geometry, materials);
+    scene.add(cube);
+
+    camera.position.z = 20; // Adjust the camera to fit the larger cube
+
+    let rotationSpeed = 0.01; // Default rotation speed
+    let isPaused = false; // Variable to track whether the rotation is paused
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        rotationSpeed += 0.01; // Increase rotation speed
+      }
+      if (e.key === 'ArrowLeft') {
+        rotationSpeed -= 0.01; // Decrease rotation speed
+      }
+      if (e.key === 'ArrowUp') {
+        isPaused = true; // Pause rotation
+        setTimeout(() => {
+          isPaused = false; // Resume rotation after 2 seconds
+        }, 2000);
+      }
+      if (e.key === 'ArrowDown') {
+        isPaused = true; // Pause rotation
+        setTimeout(() => {
+          isPaused = false; // Resume rotation after 2 seconds
+        }, 2000);
+      }
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (!isPaused) {
+        cube.rotation.x += rotationSpeed; // Rotate around the X-axis
+        cube.rotation.y += rotationSpeed; // Rotate around the Y-axis
+        cube.rotation.z += rotationSpeed; // Rotate around the Z-axis (Optional, adds more movement)
+      }
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
