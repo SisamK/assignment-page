@@ -16,32 +16,32 @@
     document.body.appendChild(renderer.domElement);
 
     // Add a light source
-    const light = new THREE.AmbientLight(0xffffff, 1); // White light
+    const light = new THREE.AmbientLight(0xffffff, 1); 
     scene.add(light);
 
     // Load image textures for all faces
     const textureLoader = new THREE.TextureLoader();
-    const frontTexture = textureLoader.load('fruits.jpg');  // Replace with child-friendly image
-    const backTexture = textureLoader.load('stars.jpg');    // Replace with child-friendly image
-    const leftTexture = textureLoader.load('panda.jpg');    // Replace with child-friendly image
+    const frontTexture = textureLoader.load('fruits.jpg');  
+    const backTexture = textureLoader.load('stars.jpg');    
+    const leftTexture = textureLoader.load('panda.jpg');    
     const rightTexture = textureLoader.load('tiger.jpg');
-    const topTexture = textureLoader.load('octopus.jpg');   // Replace with child-friendly image
+    const topTexture = textureLoader.load('octopus.jpg');   
 
     // Load materials using the textures for each side
     const materials = [
-      new THREE.MeshBasicMaterial({ map: frontTexture }), // Front
-      new THREE.MeshBasicMaterial({ map: backTexture }),  // Back
-      new THREE.MeshBasicMaterial({ map: leftTexture }),  // Left
-      new THREE.MeshBasicMaterial({ map: rightTexture }), // Right
-      new THREE.MeshBasicMaterial({ map: topTexture }),   // Top (solid color)
-      new THREE.MeshBasicMaterial({ color: 0xaaaaaa }),   // Bottom (solid color)
+      new THREE.MeshBasicMaterial({ map: frontTexture }), 
+      new THREE.MeshBasicMaterial({ map: backTexture }),  
+      new THREE.MeshBasicMaterial({ map: leftTexture }),  
+      new THREE.MeshBasicMaterial({ map: rightTexture }), 
+      new THREE.MeshBasicMaterial({ map: topTexture }),   
+      new THREE.MeshBasicMaterial({ color: 0xaaaaaa }),   
     ];
 
-    const geometry = new THREE.BoxGeometry(10, 10, 10); // Increased size: 10x10x10
+    const geometry = new THREE.BoxGeometry(10, 10, 10); /
     const cube = new THREE.Mesh(geometry, materials);
     scene.add(cube);
 
-    camera.position.z = 20; // Adjust the camera to fit the larger cube
+    camera.position.z = 20; 
 
     let rotationSpeed = 0.01; // Default rotation speed
     let isPaused = false; // Variable to track whether the rotation is paused
